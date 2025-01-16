@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Project"
+        tools:targetApi="31">
+        <activity
+            android:name=".UserHoursSearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserSearchByHours"
+            android:exported="false" />
+        <activity
+            android:name=".UserServiceSearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserSearchByService"
+            android:exported="false" />
+        <activity
+            android:name=".UserAdresseSearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserSearchByAdresse"
+            android:exported="false" />
+        <activity
+            android:name=".UserSearchBranchesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmployeeManageBranchProfile"
+            android:exported="false" />
+        <activity
+            android:name=".EmployeeBranchProfile"
+            android:exported="false" />
+        <activity
+            android:name=".EmployeeHomepage"
+            android:exported="false" />
+        <activity
+            android:name=".AdminManageBranches"
+            android:exported="false" />
+        <activity
+            android:name=".AdminManageUsers"
+            android:exported="false" />
+        <activity
+            android:name=".AdminManageServices"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminHomepage"
+            android:exported="true" />
+        <activity
+            android:name=".Homepage"
+            android:exported="true" />
+        <activity android:name=".EmployeeManageServices" />
+        <activity android:name=".AddService" />
+        <activity android:name=".ServiceDetail" />
+        <activity android:name=".ServiceManager" />
+        <activity android:name=".UserActivity" />
+        <activity android:name=".EmployeeServicesActivity" />
+        <activity android:name=".UserActionsActivity" />
+        <activity android:name=".ViewRequestedService" />
+        <activity android:name=".EmployeeManageRequests" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,110 @@
+[
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_login.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_search_by_service.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_search_by_service.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_employee_services.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_employee_services.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_employee_branch_profile.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_employee_branch_profile.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_search_by_adresse.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_search_by_adresse.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_admin_manage_services.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_admin_manage_services.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_search_branches.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_search_branches.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_view_requested_service.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_view_requested_service.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_employee_homepage.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_employee_homepage.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_add_service.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_add_service.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_actions.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_actions.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/manage_service.xml",
+        "source": "com.example.project.app-main-43:/layout/manage_service.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_search_by_hours.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_search_by_hours.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_signup.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_signup.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_main.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_admin_homepage.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_admin_homepage.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/layout_service.xml",
+        "source": "com.example.project.app-main-43:/layout/layout_service.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_employee_manage_requests.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_employee_manage_requests.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_service_search_result.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_service_search_result.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_adresse_search_result.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_adresse_search_result.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_admin_manage_branches.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_admin_manage_branches.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_admin_manage_users.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_admin_manage_users.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user_hours_search_result.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user_hours_search_result.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_dialog_rating.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_dialog_rating.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_employee_manage_services.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_employee_manage_services.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_user.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_user.xml"
+    },
+    {
+        "merged": "com.example.project.app-mergeDebugResources-40:/layout/activity_employee_manage_branch_profile.xml",
+        "source": "com.example.project.app-main-43:/layout/activity_employee_manage_branch_profile.xml"
+    }
+]
