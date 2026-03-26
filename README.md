@@ -14,7 +14,7 @@ A machine learning pipeline classifying music genres using audio features (MFCCs
 
 ### Content-Based Playlist Recommender
 **Stack**: Python, librosa, scikit-learn  
-A recommendation system that finds acoustically similar songs using cosine similarity on audio features. Reveals cross-genre musical relationships — blues/rock, hiphop/disco -and explores the limits of Western-centric music datasets.
+A recommendation system that finds acoustically similar songs using cosine similarity on audio features. Reveals cross-genre musical relationships- blues/rock, hiphop/disco -and explores the limits of Western-centric music datasets.
 
 
 ### Immersive Mars VR
