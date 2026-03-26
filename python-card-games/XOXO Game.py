@@ -1,7 +1,7 @@
 from d4Lib import*
 from tkinter import *
 
-#creation d'un tableau vide
+#creation d'un tableau vide- 
 tab=[[1,2,3],[4,5,6],[7,8,9]]
 effaceTableau (tab)
 I=1
