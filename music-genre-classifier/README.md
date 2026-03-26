@@ -1,4 +1,4 @@
-By Yacine Dosso
+By Yacine Dosso - 
 
 # Music Genre Classifier
 **Author:** Yacine Dosso  
