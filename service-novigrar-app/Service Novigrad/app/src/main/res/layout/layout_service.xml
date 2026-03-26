@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Nom du Service -->
+        <TextView
+            android:id="@+id/textViewServiceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nom du Service"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/editTextServiceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Entrez le nom du service" />
+
+        <!-- Champs du Formulaire -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Champs du Formulaire"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <!-- Layout pour les champs du formulaire dynamiques -->
+        <LinearLayout
+            android:id="@+id/linearLayoutFormFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Champs du formulaire seront ajoutés ici dynamiquement -->
+        </LinearLayout>
+
+        <!-- Bouton Ajouter un Champ du Formulaire -->
+        <Button
+            android:id="@+id/buttonAddFormField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter un Champ du Formulaire"/>
+
+        <!-- Documents Requis -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Documents Requis"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <!-- Layout pour les documents requis dynamiques -->
+        <LinearLayout
+            android:id="@+id/linearLayoutDocuments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Documents requis seront ajoutés ici dynamiquement -->
+        </LinearLayout>
+
+        <!-- Bouton Ajouter un Document Requis -->
+        <Button
+            android:id="@+id/buttonAddDocument"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter un Document Requis"/>
+
+        <!-- Boutons de Modification et Suppression -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonUpdateService"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Modifier"/>
+
+            <Button
+                android:id="@+id/buttonDeleteService"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Supprimer"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

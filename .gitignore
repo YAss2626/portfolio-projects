@@ -1,0 +1,33 @@
+# General
+*.class
+*.dex
+*.o
+*.so
+*.exe
+*.log
+*.tmp
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Java / Android
+*.iml
+.gradle/
+build/
+local.properties
+/captures
+/externalNativeBuild
+/.cxx
+
+# C++ / C
+*.out
+*.obj
+*.a
+*.exe
+
+# Node / JS / Web
+node_modules/
+dist/
+.env

@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mars Base</title>
+    <meta name="description" content="A-Frame Mars Base Hub (custom collisions)">
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+
+    <!-- add extras  -->
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.6.0/dist/aframe-extras.min.js"></script>
+
+    <script src="/js/spinning-effect.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+    <script src="js/sound-manager.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/npc-dialogue.js"></script>
+
+    
+    
+    <style>
+      html, body { margin:0; height:100%; background:#000; overflow:hidden; }
+    </style>
+  </head>
+  <body>
+
+    <a-scene background="color:#101218">
+      <a-assets>
+        <a-asset-item id="doorGLB" response-type="arraybuffer" src="assets/door.glb"></a-asset-item>
+        <a-asset-item id="phobos" response-type="arraybuffer" src="assets/phobos.glb"></a-asset-item>
+        <a-asset-item id="deimos" response-type="arraybuffer" src="assets/deimos_centered.glb"></a-asset-item>
+        <a-asset-item id="jupiter" response-type="arraybuffer" src="assets/jupiter.glb"></a-asset-item>
+        <a-asset-item id="basaltRock" response-type="arraybuffer" src="assets/basalt.glb"></a-asset-item>
+        <a-asset-item id="duniteRock" response-type="arraybuffer" src="assets/dunite.glb"></a-asset-item>
+        <a-asset-item id="hematiteRock" response-type="arraybuffer" src="assets/hematite.glb"></a-asset-item>
+        <a-asset-item id="gypsumRock" response-type="arraybuffer" src="assets/gypsum-centered.glb"></a-asset-item>
+        <a-asset-item id="sciFiTable" response-type="arraybuffer" src="assets/sci-fi_table.glb"></a-asset-item>
+        <a-asset-item id="olympusGLB" src="assets/mars_-_olympus_mons.glb"></a-asset-item>
+        <a-asset-item id="sojournerRover" response-type="arraybuffer" src="assets/sojournerRover.glb"></a-asset-item>
+        <a-asset-item id="opportunityRover" response-type="arraybuffer" src="assets/opportunity.glb"></a-asset-item>
+        <a-asset-item id="perseveranceRover" response-type="arraybuffer" src="assets/perseverance.glb"></a-asset-item>
+        <a-asset-item id="jezeroCraterGLB" response-type="arraybuffer" src="assets/jezeroCrater.glb"></a-asset-item>
+        <a-asset-item id="astronaut_missions" response-type="arraybuffer" src="assets/astronaut.glb"></a-asset-item>
+
+        
+        <img id="helmetOverlayImg" src="assets/helmetview.png">
+        <img id="olympusOrbit" src="assets/olympus_orbit.jpg">
+        <img id="mars1" src="assets/mars1.jpg">
+        <img id="mars2" src="assets/mars2.jpg">
+        <img id="textBG_1" src="assets/textBG_1.jpg">
+        <img id="textBG_2" src="assets/textBG_2.jpg">
+        <img id="textBG_3" src="assets/textBG_3.jpg">
+        <img id="hubBG" src="assets/hubBG.png">
+        <img id="opportunityTexture" src="assets/opportunityTexture.png">
+        
+        <!-- SOUND ASSETS  -->
+        <!-- Ambient sounds -->
+        <audio id="sndAmbientWindExt" src="sounds/427401_imjeax_desert-ambient-loop.wav"></audio>
+        <audio id="sndAmbientInterior" src="sounds/524951_burning-mir_space-ambient-v02.wav"></audio>
+        
+        <!-- Interaction sounds -->
+        <audio id="sndDoorOpen" src="sounds/468937_timothyd4y_closet-doorknob-turn.wav"></audio>
+        <audio id="sndFootstep" src="sounds/477394__nuff3__steps-dirt_3b.ogg"></audio>
+        <audio id="sndRockScan" src="sounds/735168__irolan__item-pickup-chime.wav"></audio>
+        <audio id="sndUIClick" src="sounds/677861__el_boss__ui-button-click.wav"></audio>
+        
+        <!-- Quiz sounds -->
+        <audio id="sndQuizCorrect" src="sounds/456162_bwg2020_correct-2.wav"></audio>
+        <audio id="sndQuizWrong" src="sounds/720893_baggonotes_incorrect_buzz.wav"></audio>
+        
+        <!-- Lab analysis sound -->
+        <audio id="sndLabAnalysis" src="sounds/340959__aceofspadesproduc100__scanning-sound.wav"></audio>
+
+        <audio id="sndBaseAmbience" src="sounds/524951__burning-mir__space-ambient-v02.wav"></audio>
+        <audio id="sndMissionComplete" src="sounds/433700__dersuperanton__mission-completed-deep-voice.wav"></audio>
+        <audio id="sndRoverIdle" src="sounds/353263__thespiderwriter__droid-hum.mp3"></audio>
+      </a-assets>
+
+      <!-- RIG that moves -->
+      <a-entity id="rig"
+                  position="0 0 0"
+                  fp-controls="speed:7; radius:0.35"
+                  sound-manager
+                  footstep-sound="interval: 150"
+                  audio-zone-controller>
+
+      <a-entity id="camera"
+                camera
+                position="0 1.6 0"
+                look-controls="pointerLockEnabled: false; magicWindowTrackingEnabled: true">
+        <a-entity cursor="rayOrigin: mouse"
+                  raycaster="objects: .interactive; far: 20"></a-entity>
+        
+        <!--Helmet overlay-->
+        <a-image id="helmetOverlay"
+                src="#helmetOverlayImg"
+                position="0 0 -0.6"
+                width="2"
+                height="1"
+                material="transparent: true; opacity: 0.5; depthTest: false; side: double"
+                visible="false"
+                hud-vr-scale="desktop: 1; vr: 0.5 "
+                hud-vr-position="desktop: 0 0 -0.6; vr: 0 0 -0.45">
+        </a-image>
+
+        
+        <!--Foggy breath effect-->
+        <a-plane id="breathFog"
+           position="0 0 -0.6"
+           width="2"
+           height="1"
+           color="#ffffff"
+           material="transparent: true; opacity: 0; depthTest: false; side: double"
+           animation="property: material.opacity;
+                      dir: alternate;
+                      dur: 1600;
+                      from: 0;
+                      to: 0.15;
+                      loop: true"
+           visible="false">
+        </a-plane>
+
+        <!-- HUD notification -->
+        <a-entity id="notificationText"
+                  position="0 -0.3 -1"
+                  text="value: ;
+                        align: center;
+                        width: 2;
+                        color: #4fa84a;"
+                  visible="false">
+        </a-entity>
+
+        <!-- PLAY AGAIN BUTTON (HUD) -->
+        <a-entity id="playAgainButton"
+                  class="interactive"
+                  position="0 -0.65 -1"
+                  geometry="primitive: plane; width: 0.9; height: 0.22"
+                  material="color: #222; opacity: 0.9; transparent: true; side: double;"
+                  visible="false"
+                  play-again-button
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Play again;
+                          align: center;
+                          width: 1.8;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+
+        <!-- HUD BAR -->
+        <a-entity id="oxygenHUD" position="-1.1 -0.8 -1"
+                                 hud-vr-scale="desktop: 1; vr: 0.6"
+                                 hud-vr-position="desktop: -0.85 -0.7 -1; vr: -0.45 -0.45 -1">
+
+          <!-- Background -->
+          <a-plane width="0.8" height="0.12"
+                  color="#111"
+                  opacity="0.8"
+                  material="side: double; depthTest: false; depthWrite: false; transparent: true">
+          </a-plane>
+
+          <!-- Fill bar  -->
+          <a-plane id="oxygenBar"
+                  position="-0.38 0 0.01"
+                  width="0.76"
+                  height="0.08"
+                  color="#00e5ff"
+                  material="side: double; depthTest: false; depthWrite: false; transparent: true">
+          </a-plane>
+
+          <!-- Text percentage -->
+          <a-entity id="oxygenText"
+                    position="-0.05 0 0.02"
+                    text="value: Hub O2: 100%;
+                          align: center;
+                          width: 1.5;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+                <!-- SUIT OXYGEN HUD BAR -->
+        <a-entity id="suitHUD" position="1.1 -0.8 -1"
+                               hud-vr-scale="desktop: 1; vr: 0.6"
+                               hud-vr-position="desktop: 0.85 -0.7 -1; vr: 0.45 -0.45 -1">
+
+          <!-- Background -->
+          <a-plane width="0.8" height="0.12"
+                   color="#111"
+                   opacity="0.8"
+                   material="side: double; depthTest: false; depthWrite: false; transparent: true">
+          </a-plane>
+
+          <!-- Fill bar -->
+          <a-plane id="suitOxygenBar"
+                   position="-0.38 0 0.01"
+                   width="0.76"
+                   height="0.08"
+                   color="#00ff9d"
+                   visible="false"
+                   material="side: double; depthTest: false; depthWrite: false; transparent: true">
+          </a-plane>
+
+          <!-- Text -->
+          <a-entity id="suitOxygenText"
+                    position="-0.05 0 0.02"
+                    text="value: Suit O2: 100%;
+                          align: center;
+                          width: 1.5;
+                          color: #ffffff;"
+                    visible="false">
+          </a-entity>
+        </a-entity>
+
+
+        <!-- RED WARNING OVERLAY  -->
+        <a-entity id="oxygenWarningOverlay"
+                  geometry="primitive: plane; width: 2; height: 2"
+                  position="0 0 -0.6"
+                  material="color: #ff0000;
+                            opacity: 0;
+                            transparent: true;
+                            side: double;"
+                  visible="false">
+        </a-entity>
+      </a-entity>
+
+
+
+        <!-- LEFT HAND (movement + click) -->
+        <a-entity id="leftHand"
+                  laser-controls="hand: left"
+                  raycaster="objects: .interactive; far: 20; showLine: true"
+                  cursor="fuse: false; rayOrigin: entity; downEvents: triggerdown; upEvents: triggerup">
+        </a-entity>
+
+        <!-- RIGHT HAND (turning + click) -->
+        <a-entity id="rightHand"
+                  laser-controls="hand: right"
+                  raycaster="objects: .interactive; far: 20; showLine: true"
+                  cursor="fuse: false; rayOrigin: entity; downEvents: triggerdown; upEvents: triggerup">
+        </a-entity>
+
+
+      </a-entity>
+
+      <!-- Clean readable welcome text -->
+      <a-entity id="welcomeText"
+                position="0 2 -3"
+                text="value: Welcome to the Mars Base. Here you will explore the planet and the whole solar system.;
+                      align: center;
+                      width: 4;
+                      color: #ffd480;
+                      wrapCount: 40;
+                      shader: standard;">
+        <a-animation attribute="position"
+                      from="0 2 -3"
+                      to="0 2.2 -3"
+                      dur="2500"
+                      direction="alternate"
+                      easing="easeInOutSine"
+                      repeat="indefinite"></a-animation>
+      </a-entity>
+
+
+      <a-entity id="phobos" position="4 1.78 3" scale="0.03 0.03 0.03"
+                gltf-model="#phobos"
+                animation="property:rotation; to:0 360 0; loop:true; dur:30000"
+                spatial-sound="src: sounds/524951__burning-mir__space-ambient-v02.wav; loop: true; volume: 0.3; refDistance: 1; maxDistance: 8"
+                shadow></a-entity>
+
+      <a-entity id="deimos" position="4.172 1.78 0.745" scale="0.0005 0.0005 0.0005"
+                gltf-model="#deimos"
+                animation="property:rotation; to:0 360 0; loop:true; dur:30000"
+                shadow></a-entity>
+
+
+      <a-entity id="jupiter" position="0.72 1.78 4.6" rotation="0 0 0" scale="0.3 0.3 0.3"
+                gltf-model="#jupiter"
+                animation="property:rotation; to:0 360 0; loop:true; dur:30000"
+                spatial-sound="src: sounds/524951__burning-mir__space-ambient-v02.wav; loop: true; volume: 0.4; refDistance: 1.5; maxDistance: 10"
+                shadow></a-entity>
+                  
+      <a-entity id="phobos_info_panel" position="3.463 0.7 3.3" rotation="-30 -90 0">
+        <a-plane width="2.0" height="1"
+                  src="#textBG_2"
+                  material="opacity: 0.95; side: double; shader: flat;"
+                  shadow></a-plane>
+        <a-entity text="value: Phobos is the larger of Mars' two moons, known for its irregular, potato-like shape and close orbit. It is spiraling closer to Mars and may crash or form a ring in ~50 million years.;
+                        color: white;
+                        wrapCount: 40;
+                        align: center;
+                        baseline: center;
+                        width: 2;
+                        shader: msdf;
+                        font: https://cdn.aframe.io/fonts/Roboto-msdf.json;"
+                  position="0 0 0.01">
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="deimos_info_panel" position="3.463 0.7 0.717" rotation="-30 -90 0">
+        <a-plane width="2.0" height="1"
+                  src="#textBG_3"
+                  material="opacity: 0.95; side: double; shader: flat;"
+                  shadow></a-plane>
+        <a-entity text="value: Deimos is Mars smaller, outer moon—smoother and dust-draped, with a rounded rubble-pile shape. It orbits farther out (~23,460 km) every ~30 hours and is slowly drifting away over time.;
+                        color: white;
+                        wrapCount: 40;
+                        align: center;
+                        baseline: center;
+                        width: 2;
+                        shader: msdf;
+                        font:	https://cdn.aframe.io/fonts/Roboto-msdf.json"
+                  position="0 0 0.01">
+        </a-entity>
+      </a-entity>
+
+            <!-- EVA SUIT LOCKER / STATION -->
+      <a-entity id="evaSuitStation"
+                position="-4.622 1 0.69"
+                rotation="0 90 0">
+
+        <!-- Locker body -->
+        <a-box width="0.9" height="1.9" depth="0.5"
+               material="color: #333; metalness: 0.2; roughness: 0.8;">
+        </a-box>
+
+        <!-- Title text -->
+        <a-entity position="0 1.2 0.26"
+                  text="value: EVA Suit Station;
+                        align: center;
+                        width: 2;
+                        color: #ffd480;">
+        </a-entity>
+
+        <!-- Interactive button -->
+        <a-entity id="evaSuitButton"
+                  class="interactive"
+                  position="0 0.6 0.26"
+                  geometry="primitive: box; width: 0.6; height: 0.22; depth: 0.04;"
+                  material="color: #0066ff; metalness: 0.3; roughness: 0.5"
+                  eva-suit-station
+                  ui-sound>
+          <a-entity position="0 0 0.02"
+                    text="value: Put suit on;
+                          align: center;
+                          width: 1.4;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+
+
+      <!-- Base walls (front open) -->
+      <a-box class="solid" position="-5 1.2 0" width="0.2" height="2.4" depth="10" color="#e9ecef"></a-box>
+      <a-box class="solid" position="5 1.2 0"  width="0.2" height="2.4" depth="10" color="#e9ecef"></a-box>
+      <a-box class="solid" position="0 1.2 5"  width="10"  height="2.4" depth="0.2" color="#e9ecef"></a-box>
+      <a-box position="0 2.4 0" width="10" height="0.2" depth="10" color="#dfe6e9"></a-box>
+      <a-box position="0 0.05 0" width="10" height="0.1" depth="10" color="#c8d6e5"></a-box>
+
+      <!-- FRONT WALLS -->
+      <a-box class="solid"
+              position="-3.25 1.2 -5"
+              width="3.5" height="2.4" depth="0.2"
+              color="#e9ecef"></a-box>
+
+      <a-box class="solid"
+              position="3.25 1.2 -5"
+              width="3.5" height="2.4" depth="0.2"
+              color="#e9ecef"></a-box>
+
+      <!-- Left wall image -->
+      <a-plane src="#mars1"
+                position="-3.2 1.2 -4.8"
+                rotation="0 0 0"
+                scale="2 2 2"
+                width="1.2" height="0.8"
+                material="side:double; shader:flat;">
+      </a-plane>
+
+      <!-- Right wall image -->
+      <a-plane src="#mars2"
+                position="3.22 1.2 -4.8"
+                rotation="0 0 0"
+                scale="2 2 2"
+                width="1.2" height="0.8"
+                material="side:double; shader:flat;">
+      </a-plane>
+
+      <!-- EXTENDED TUNNEL -->
+      <a-box class="solid"
+              position="-1.5 1.2 -9.5"
+              width="0.2" height="2.4" depth="9"
+              color="#999"></a-box>
+
+      <a-box class="solid"
+              position="1.5 1.2 -9.5"
+              width="0.2" height="2.4" depth="9"
+              color="#999"></a-box>
+
+      <a-box position="0 0.05 -9.5"
+              width="3" height="0.1" depth="9"
+              color="#bfc9ca"></a-box>
+
+      <a-box position="0 2.4 -9.5"
+              width="3" height="0.2" depth="9"
+              color="#b0b0b0"></a-box>
+
+      <!-- Doors with interactive-door component + wall buttons -->
+
+      <!-- OUTER DOOR -->
+      <a-entity id="outerDoorHinge"
+                  position="1.5 0 -13.97"
+                  rotation="0 0 0"
+                  interactive-door="openAngle: -90; duration: 1000"
+                  door-sound>
+
+        <!-- Door mesh (NOT interactive) -->
+        <a-entity id="outerDoorModel"
+                  gltf-model="#doorGLB"
+                  ignore-raycast
+                  position="-1.5 2.326 0"
+                  rotation="0 0 0"
+                  scale="0.024 0.011 0.01">
+        </a-entity>
+      </a-entity>
+
+      <!-- Buttons for OUTER DOOR -->
+      <a-entity id="outerDoorButtonInside"
+                class="interactive"
+                position="1.37 1.2 -12.63"
+                rotation="0 0 90"
+                geometry="primitive: cylinder; radius: 0.1; height: 0.05"
+                material="color: #00b894; metalness: 0.3; roughness: 0.5"
+                door-button="target: #outerDoorHinge"
+                ui-sound>
+        <a-entity position="0.283 -0.023 0"
+                  rotation="-90 -90 0"
+                  text="value: OPEN;
+                        align: center;
+                        width: 1.5;
+                        color: #ffffff;">
+        </a-entity>
+      </a-entity>
+
+      <!-- Platform + button for OUTER DOOR (outside) -->
+      <a-entity id="outerDoorButtonOutsidePlatform"
+                position="-1.86 0 -14.4">
+
+        <!-- The little box it stands on -->
+        <a-entity position="0 0.3 0"
+                  geometry="primitive: box; width: 0.4; depth: 0.4; height: 0.3;"
+                  material="color: #ffffff; metalness: 0.1; roughness: 0.8;"
+                  shadow>
+        </a-entity>
+
+        <!-- The actual clickable button on top -->
+        <a-entity id="outerDoorButtonOutside"
+                  class="interactive"
+                  position="0 0.48 0"
+                  geometry="primitive: cylinder; radius: 0.1; height: 0.05"
+                  material="color: #00b894; metalness: 0.3; roughness: 0.5"
+                  door-button="target: #outerDoorHinge; verticalPress: true"
+                  ui-sound>
+
+          <!-- Text label for OPEN/CLOSE -->
+          <a-entity position="0 0.18 0"
+                    rotation="0 180 0"
+                    text="value: OPEN;
+                          align: center;
+                          width: 1.5;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+
+
+      <!-- INNER DOOR -->
+      <a-entity id="innerDoorHinge"
+                position="1.5 0 -5.055"
+                interactive-door="
+                  openAngle: -90; duration: 1000;
+                  closedPos: 0.002 1.2 -5.055;
+                  openPos:   1.57  1.2 -6.084;
+                  closedSize: 3 2.4 0.05;
+                  openSize:   0.05 2.4 3"
+                  door-sound>
+
+        <!-- Door mesh (NOT interactive) -->
+        <a-entity id="innerDoorModel"
+                  gltf-model="#doorGLB"
+                  ignore-raycast
+                  position="-1.5 2.326 0.1"
+                  rotation="0 0 0"
+                  scale="0.024 0.011 0.01">
+        </a-entity>
+      </a-entity>
+
+      <!-- Buttons for INNER DOOR -->
+      <a-entity id="innerDoorButtonInside"
+                class="interactive"
+                position="1.76 1.2 -4.868"
+                rotation="270 0 0"
+                geometry="primitive: cylinder; radius: 0.1; height: 0.05"
+                material="color: #0984e3; metalness: 0.3; roughness: 0.5"
+                door-button="target: #innerDoorHinge"
+                ui-sound>
+        <a-entity position="-0.043 -0.11 0.2"
+                  rotation="90 0 0"
+                  text="value: OPEN;
+                        align: center;
+                        width: 1.5;
+                        color: #ffffff;">
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="innerDoorButtonOutside"
+                class="interactive"
+                position="-1.33 1.2 -7.5"
+                rotation="0 0 90"
+                geometry="primitive: cylinder; radius: 0.1; height: 0.05"
+                material="color: #0984e3; metalness: 0.3; roughness: 0.5"
+                door-button="target: #innerDoorHinge"
+                ui-sound>
+        <a-entity position="0.25 0.03 0"
+                  rotation="90 90 0"
+                  text="value: OPEN;
+                        align: center;
+                        width: 1.5;
+                        color: #ffffff;">
+        </a-entity>
+      </a-entity>
+
+
+      <!-- MARS FACTS TERMINAL -->
+      <a-entity id="marsFactsTerminal"
+                position="-4.435 1.1 2.74"
+                rotation="0 90 0">
+
+        <!-- Background panel -->
+        <a-plane width="2.2" height="1.3"
+                material="color: #111; opacity: 0.9; side: double">
+        </a-plane>
+
+        <!-- Title -->
+        <a-entity position="0.84 0.873 -0.24"
+                  text="value: Mars Facts;
+                        align: left;
+                        width: 2.4;
+                        color: #9a7432;">
+        </a-entity>
+
+        <!-- Topic buttons on the left -->
+        <a-entity id="marsFactButtonAtmosphere"
+                  class="interactive"
+                  position="-1.52 0.15 0.02"
+                  geometry="primitive: box; width: 0.7; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  mars-fact-button="topic: atmosphere"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Atmosphere;
+                          align: center;
+                          width: 0.9;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <a-entity id="marsFactButtonWater"
+                  class="interactive"
+                  position="-1.52 -0.1 0.02"
+                  geometry="primitive: box; width: 0.7; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  mars-fact-button="topic: water"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Water & Ice;
+                          align: center;
+                          width: 0.9;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <a-entity id="marsFactButtonMissions"
+                  class="interactive"
+                  position="-1.52 -0.35 0.02"
+                  geometry="primitive: box; width: 0.7; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  mars-fact-button="topic: missions"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Missions;
+                          align: center;
+                          width: 0.9;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <!-- Text area on the right -->
+        <a-entity id="marsFactsText"
+                  position="0 0 0.02"
+                  text="value: Tap a topic to learn more about Mars.;
+                        align: left;
+                        width: 1.8;
+                        wrapCount: 35;
+                        color: #ffffff;">
+        </a-entity>
+      </a-entity>
+
+      <!-- SCORE PANEL -->
+      <a-entity id="scorePanel"
+                position="2 1.3 4.6"
+                rotation="0 180 0">
+
+        <!-- Background -->
+        <a-plane width="1.4" height="0.5"
+                position="0 0 -0.05"
+                material="color: #111; opacity: 0.9; side: double;">
+        </a-plane>
+
+        <!-- Score text (updated by score system) -->
+        <a-entity id="scoreText"
+                  position="0 0 0.01"
+                  text="value: Explorer Points: 0;
+                        align: center;
+                        width: 1.6;
+                        color: #ffd480;">
+        </a-entity>
+      </a-entity>
+
+
+      <!-- Sojourner rover with quiz -->
+      <a-entity id="sojournerRoverRoot"
+                position="26 1.2 38"
+                rotation="0 180 0"
+                rover-quiz
+                spatial-sound="src: sounds/353263__thespiderwriter__droid-hum.mp3; loop: true; volume: 0.3; refDistance: 2; maxDistance: 8">
+>  
+
+        <!-- Rover model  -->
+        <a-entity id="sojournerModel"
+                  gltf-model="#sojournerRover"
+                  position="0 0 0"
+                  rotation="0 30 0"
+                  scale="0.003 0.003 0.003"> 
+        </a-entity>
+
+        <!-- Floating hint above rover -->
+        <a-entity class="rover-hint"
+                  position="0 1.5 0"
+                  text="value: Click rover to learn more;
+                        align: center;
+                        width: 3;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 1000;
+                            easing: easeInOutSine;
+                            to: 0 1.7 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+      <!-- Opportunity rover with quiz and deployment animation -->
+      <a-entity id="opportunityRoverRoot"
+                position="36.5 0.14 -37.5"
+                opportunity-quiz
+                spatial-sound="src: sounds/353263__thespiderwriter__droid-hum.mp3; loop: true; volume: 0.35; refDistance: 3; maxDistance: 10">
+>
+
+        <!-- Rover model -->
+        <a-entity id="opportunityModel"
+                  gltf-model="#opportunityRover"
+                  position="0 0 0"
+                  rotation="0 80 0"
+                  scale="1 1 1"
+                  opportunity-skin>
+        </a-entity>
+
+        <!-- Floating hint above rover -->
+        <a-entity class="rover-hint"
+                  position="-0.39 1.5 0.6"
+                  text="value: Click rover to learn about Opportunity;
+                        align: center;
+                        width: 3;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 1000;
+                            easing: easeInOutSine;
+                            to: 0 1.7 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+      <!-- Perseverance rover with quiz (near Jezero Crater) -->
+      <a-entity id="perseveranceRoverRoot"
+                position="-73.4 0.34 39.3"
+                rotation="0 140 0"
+                perseverance-quiz
+                spatial-sound="src: sounds/353263__thespiderwriter__droid-hum.mp3; loop: true; volume: 0.4; refDistance: 3; maxDistance: 12">
+
+        <!-- Rover model -->
+        <a-entity id="perseveranceModel"
+                  gltf-model="#perseveranceRover"
+                  position="0 0 0"
+                  rotation="0 0 0"
+                  scale="0.8 0.8 0.8"
+                  class="interactive">
+        </a-entity>
+
+        <!-- Floating hint above rover -->
+        <a-entity class="rover-hint"
+                  position="0 1.6 0"
+                  text="value: Click rover to learn about Perseverance;
+                        align: center;
+                        width: 3;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 1000;
+                            easing: easeInOutSine;
+                            to: 0 1.8 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+
+
+
+
+
+      <!-- Collectible basalt rock outside the base -->
+      <a-entity id="basaltRockRoot"
+                position="-46 1.56 4.76"
+                rotation="0 90 0"
+                rock-grabbable="rockId: basalt">
+
+        <!-- Actual rock mesh (small + clickable) -->
+        <a-entity class="interactive"
+                  gltf-model="#basaltRock"
+                  scale="0.001 0.001 0.001">
+        </a-entity>
+
+        <!-- Floating hint above the rock (normal scale) -->
+        <a-entity class="collect-hint"
+                  position="0 1 0"
+                  text="value: Click to collect;
+                        align: center;
+                        width: 2;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 900;
+                            easing: easeInOutSine;
+                            to: 0 1.2 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+            <!-- Collectible basalt rock outside the base -->
+      <a-entity id="duniteRockRoot"
+                position="40 0.4 -20"
+                scale="5 5 5"
+                rock-grabbable="rockId: dunite">
+
+        <!-- Actual rock mesh (small + clickable) -->
+        <a-entity class="interactive"
+                  gltf-model="#duniteRock"
+                  scale="0.001 0.001 0.001">
+        </a-entity>
+
+        <!-- Floating hint above the rock (normal scale) -->
+        <a-entity class="collect-hint"
+                  position="0 0.2 0"
+                  scale="0.2 0.2 0.2"
+                  text="value: Click to collect;
+                        align: center;
+                        width: 2;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 900;
+                            easing: easeInOutSine;
+                            to: 0 0.3 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+      
+      <!-- Collectible basalt rock-->
+      <a-entity id="hematiteRockRoot"
+                position="43.6 0.1 18.4"
+                rock-grabbable="rockId: hematite">
+
+        <!-- Actual rock mesh (small + clickable) -->
+        <a-entity class="interactive"
+                  gltf-model="#hematiteRock"
+                  scale="1 1 1">
+        </a-entity>
+
+        <!-- Floating hint above the rock (normal scale) -->
+        <a-entity class="collect-hint"
+                  position="0 1 0"
+                  text="value: Click to collect;
+                        align: center;
+                        width: 2;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 900;
+                            easing: easeInOutSine;
+                            to: 0 1.2 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+      <!-- Collectible gypsum rock -->
+      <a-entity id="gypsumRockRoot"
+                position="1.5 0.44 26"
+                rock-grabbable="rockId: gypsum">
+
+        <!-- Actual rock mesh (clickable) -->
+        <a-entity class="interactive"
+                  gltf-model="#gypsumRock"
+                  scale="0.1 0.1 0.1">
+        </a-entity>
+
+        <!-- Floating hint above the rock -->
+        <a-entity class="collect-hint"
+                  position="0 1 0"
+                  text="value: Click to collect;
+                        align: center;
+                        width: 2;
+                        color: #ffd480;"
+                  animation="property: position;
+                            dir: alternate;
+                            dur: 900;
+                            easing: easeInOutSine;
+                            to: 0 1.2 0;
+                            loop: true;">
+        </a-entity>
+      </a-entity>
+
+
+
+
+      <!-- Lab inventory / analysis console (popup) -->
+      <a-entity id="inventoryPanel"
+                position="-4.84 1.4 -1.34"
+                rotation="0 90 0"
+                visible="false">
+
+        <!-- Background card -->
+        <a-plane width="2" height="1.5"
+                material="color: #111; opacity: 0.9; side: double">
+        </a-plane>
+
+        <!-- Title -->
+        <a-entity position="0.3 0.85 0.01"
+                  text="value: Lab Console;
+                        align: left;
+                        width: 2;
+                        color: orange;">
+        </a-entity>
+
+        <!-- Back / Return button (top-right of panel) -->
+        <a-entity id="backButton"
+                  class="interactive"
+                  visible="false"
+                  position="0.8 0.812 0.01"
+                  geometry="primitive: box; width: 0.35; height: 0.16; depth: 0.02;"
+                  material="color: #333"
+                  lab-back-button
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Back;
+                          align: center;
+                          width: 0.8;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+
+        <!-- Question -->
+        <a-entity id="mineralQuestion"
+                  position="0.23 0.4 0.01"
+                  text="value: What mineral would you like to analyze?;
+                        align: left;
+                        width: 1.8;
+                        wrapCount: 30;
+                        color: #ffffff;">
+        </a-entity>
+
+
+        <!-- Basalt option button (below list, same plane) -->
+        <a-entity id="basaltOption"
+                  class="interactive"
+                  position="-1.4 0.1 0.02"
+                  geometry="primitive: box; width: 0.6; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  lab-mineral-button="mineralId: basalt"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Basalt;
+                          align: center;
+                          width: 0.8;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <!-- Dunite option button -->
+        <a-entity id="duniteOption"
+                  class="interactive"
+                  position="-1.4 -0.15 0.02"
+                  geometry="primitive: box; width: 0.6; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  lab-mineral-button="mineralId: dunite"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Dunite;
+                          align: center;
+                          width: 0.8;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <!-- Hematite option button -->
+        <a-entity id="hematiteOption"
+                  class="interactive"
+                  position="-1.4 -0.4 0.02"
+                  geometry="primitive: box; width: 0.6; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  lab-mineral-button="mineralId: hematite"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Hematite;
+                          align: center;
+                          width: 0.8;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <!-- Gypsum option button -->
+        <a-entity id="gypsumOption"
+                  class="interactive"
+                  position="-1.4 0.35 0.02"
+                  geometry="primitive: box; width: 0.6; height: 0.18; depth: 0.02;"
+                  material="color: #263238"
+                  lab-mineral-button="mineralId: gypsum"
+                  ui-sound>
+          <a-entity position="0 0 0.01"
+                    text="value: Gypsum;
+                          align: center;
+                          width: 0.8;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+        <!-- Analysis result / status text (right column) -->
+        <a-entity id="analysisText"
+                  position="0.05 -0.05 0.01"
+                  text="value: Select a mineral to analyze.;
+                        align: left;
+                        width: 1.1;
+                        wrapCount: 30;
+                        color: #ffffff;">
+        </a-entity>
+      </a-entity>
+
+
+
+      <!-- Lab table for analysis / inventory station -->
+      <a-entity id="labTable"
+                position="-4.41 0.71 -1.34"
+                rotation="0 90 0"
+                scale="0.8 0.8 0.8"
+                gltf-model="#sciFiTable">
+
+        <!-- Small Inventory button on the table surface -->
+        <a-entity id="inventoryButton"
+                  class="interactive"
+                  position="0.982 0.056 0"
+                  geometry="primitive: cylinder; radius: 0.07; height: 0.04;"
+                  material="color: #00bcd4"
+                  inventory-button
+                  animation__hover="property: material.color; type: color; to: #26ffff; startEvents: mouseenter; dur: 150"
+                  animation__hoverout="property: material.color; type: color; to: #00bcd4; startEvents: mouseleave; dur: 150"
+                  animation__press="property: position;
+                            from: 0.982 0.056 0;
+                            to:   0.982 0.02  0;
+                            dir: alternate;
+                            loop: 1;
+                            startEvents: click;
+                            dur: 120"
+                  ui-sound>
+        </a-entity>
+
+        <a-entity id="labHintText"
+                  class="interactive"
+                  position="0.8 0.6 0"
+                  scale="0.5 0.5 0.5"
+                  lab-hint
+                  text="value: Click the button to analyze collected rocks;
+                        align: center;
+                        width: 2.4;
+                        wrapCount: 28;
+                        color: #9e5c0b;"
+                  animation__bounce="property: position;
+                                    from: 0.8 0.6 0;
+                                    to: 0.8 0.8 0;
+                                    dir: alternate;
+                                    loop: true;
+                                    dur: 1000;
+                                    easing: easeInOutSine"
+                   ui-sound>
+        </a-entity>
+
+      </a-entity>
+
+
+      <!-- Inventory display shelf on the right wall -->
+      <a-entity id="inventoryShelf"
+                position="4.4 0.8 -1.5"
+                rotation="0 -90 0"
+                inventory-shelf>
+
+        <!-- Shelf board -->
+        <a-box position="-0.18 0 0"
+              width="1.9" height="0.05" depth="0.4"
+              material="color: #444; metalness: 0.2; roughness: 0.8;">
+        </a-box>
+
+        <!-- Label panel above the shelf -->
+        <a-entity position="-1 0.35 0.05">
+          <!-- Background panel -->
+          <a-plane width="1.4" height="0.3" position ="0.68 0.4 0"
+                  material="color: #111; opacity: 0.9; side: double;">
+          </a-plane>
+
+          <!-- Text: "Collected rocks" -->
+          <a-entity position="0.64 0.4 0.01"
+                    text="value: Collected rocks;
+                          align: center;
+                          width: 2;
+                          color: #ffffff;">
+          </a-entity>
+        </a-entity>
+
+
+        <!-- Basalt display -->
+        <a-entity id="shelfBasalt"
+                  class="interactive"
+                  shelf-rock-label="rockId: basalt"
+                  position="0.02 0.005 0"
+                  scale="0.0005 0.0005 0.0005"
+                  gltf-model="#basaltRock">
+        </a-entity>
+
+        <!-- Dunite display -->
+        <a-entity id="shelfDunite"
+                  class="interactive"
+                  shelf-rock-label="rockId: dunite"
+                  position="0.6 0.21 -0.025"
+                  scale="0.003 0.003 0.003"
+                  gltf-model="#duniteRock">
+        </a-entity>
+
+        <!-- Hematite display -->
+        <a-entity id="shelfHematite"
+                  class="interactive"
+                  shelf-rock-label="rockId: hematite"
+                  position="-0.50 0.035 -0.025"
+                  scale="1 1 1"
+                  gltf-model="#hematiteRock">
+        </a-entity>
+
+        <!-- Gypsum display -->
+        <a-entity id="shelfGypsum"
+                  class="interactive"
+                  shelf-rock-label="rockId: gypsum"
+                  position="-0.99 0.09 -0.02"
+                  scale="0.05 0.05 0.05"
+                  gltf-model="#gypsumRock">
+        </a-entity>
+      </a-entity>
+
+        <a-entity id="jupiterButton" position="0.72 0 4.6">
+
+          <a-entity class="button interactive"
+                    scene-link="href: jupiter.html"
+                    position="0 0.6 0"
+                    geometry="primitive: cylinder; radius: 0.15; height: 0.2;"
+                    material="color: rgb(255, 180, 0)"
+                    shadow>
+          </a-entity>
+
+          <a-entity position="0 0.3 0"
+                  geometry="primitive: box; width: 0.5; depth: 0.5; height: 0.6;"
+                  material="color: rgb(255, 255, 255)"
+                  shadow>
+          </a-entity>
+
+        </a-entity>
+
+          <a-plane width="0.5" height="0.3" position ="0.72 0.3 4" rotation="0 180 0"
+                  material="color: #111; opacity: 0.9; side: double;">
+          </a-plane>
+
+          <a-entity position="0.72 0.3 3.99" rotation="0 180 0"
+                    text="value: Jupiter;
+                          align: center;
+                          width: 2;
+                          color: #ffffff;">
+          </a-entity>
+
+      <!-- Mars landscape -->
+      <a-entity id="marsEnv"
+                position="0 0 0"
+                environment="
+                  preset: yavapai;
+                  groundColor: #b5651d;
+                  groundColor2: #e39c5b;
+                  horizonColor: #e2a36f;
+                  skyColor: #f6e5c0;
+                  lighting: distant;
+                  shadow: true;
+                  groundYScale: 1.8; 
+                  dressing: rocks;
+                  dressingAmount: 30;
+                  dressingColor: #a0522d;
+                  fog: 0.8;
+                  flatShading: true;">
+      </a-entity>
+
+      <a-entity id="olympusMons"
+          gltf-model="#olympusGLB"
+          position="-68.449 1.471 -6.603"
+          scale="50 50 50"
+          shadow
+          material="color: red">
+
+            <!-- Quiz anchor ON TOP OF THE MESH, AS CHILD -->
+            <a-entity id="olympusQuizAnchor"
+                      position="0 0.1 0.033"
+                      scale="0.02 0.02 0.02"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color: yellow; opacity: 0.8"
+                      olympus-quiz>
+            </a-entity>
+      </a-entity>
+
+      <!-- NPC mission -->
+      <a-entity 
+        id="npc-astronaut"
+        class="interactive"
+        gltf-model="#astronaut_missions"
+        position="-0.9 1.1 4.6"
+        scale="2 2 2"
+        rotation="0 180 0"
+        animation-mixer
+        npc-dialogue="playerSelector: #rig; textSelector: .npc-text; interactionDistance: 2.5">
+
+        <a-entity 
+          class="npc-text"
+          position="0 0.54 0"
+          scale="0.5 0.5 0.5"
+          text="value: New Mission Available! Click me!;
+                align: center;
+                width: 4;
+                color: #FFD700;"
+          animation="property: position;
+                    from: 0 0.54 0;
+                    to: 0 0.58 0;
+                    dir: alternate;
+                    loop: true;
+                    dur: 1000;
+                    easing: easeInOutSine">
+        </a-entity>
+
+      </a-entity>
+
+      <!-- Add this anywhere in your a-scene, after the NPC -->
+      <a-entity id="integratedQuizSystem" integrated-quiz></a-entity>
+
+
+
+      <!-- Dust particles -->
+      <a-entity particle-system="preset: dust; color: #c26b4a"></a-entity>
+
+
+
+
+        <a-entity light="type: ambient; color: #BBB"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="2 6 1"></a-entity>
+    </a-scene>
+  </body>
+</html>
