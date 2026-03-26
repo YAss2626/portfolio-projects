@@ -9,7 +9,13 @@ Collection of my academic and personal projects in computer science, showcasing 
 
 ### Music Genre Classifier
 **Stack:** Python, librosa, scikit-learn  
-A machine learning pipeline that classifies music into genres using audio features. Explores Music Information Retrieval (MIR) and highlights cultural biases in genre datasets.
+A machine learning pipeline classifying music genres using audio features (MFCCs, chroma, tempo). Built two models (SVM + Neural Network) with Grid Search tuning. Questions what it means to train a model only on Western music.
+
+
+### Content-Based Playlist Recommender
+**Stack**: Python, librosa, scikit-learn  
+A recommendation system that finds acoustically similar songs using cosine similarity on audio features. Reveals cross-genre musical relationships — blues/rock, hiphop/disco -and explores the limits of Western-centric music datasets.
+
 
 ### Immersive Mars VR
 **Stack:** A-Frame, JavaScript  
