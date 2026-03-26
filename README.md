@@ -1,19 +1,37 @@
-# portfolio-projects
-Collection of my academic and personal projects in computer science.
+# Portfolio Projects
 
-This repository showcases a variety of projects, demonstrating my expertise across different programming languages, algorithms, and technologies. It includes:
+Collection of my academic and personal projects in computer science, showcasing my skills in programming, algorithms, web development, machine learning, and interactive technologies.
 
-## KNN Java: 
-A highly optimized implementation of the k-Nearest Neighbors algorithm for classification tasks. This project leverages object-oriented principles and provides a robust solution for data analysis.
+---
 
-## Python Card Game x2: 
-Two different implementations of popular games (le Pouilleux / XOXO), developed in Python, showcasing my understanding of object-oriented programming, game logic, and GUI design.
+## 🎵 Music & Creative Projects
 
-## Bohanza Card Game C++:
-A C++ implementation of the popular Bohanza card game. This project emphasizes efficient data structures, game mechanics, and dynamic memory management in C++.
+### Music Genre Classifier
+**Author:** Yacine Dosso  
+**Stack:** Python, librosa, scikit-learn  
+A machine learning pipeline that classifies music into genres using audio features. Explores Music Information Retrieval (MIR) and highlights cultural biases in genre datasets.
 
-## e-Hotels Website (PHP & SQL): 
-A full-fledged web application designed for hotel booking management, using PHP for backend development and SQL for database integration. This project demonstrates my proficiency in web development, database management, and API integration.
+### Immersive Mars VR
+**Stack:** A-Frame, JavaScript  
+An interactive VR experience allowing users to explore Mars and complete educational missions, emphasizing immersive learning and real-time interaction.
 
-## Immersive Mars VR (A-Frame / JavaScript)
-An interactive virtual reality experience that allows users to explore the surface of Mars and complete educational missions. This project focuses on immersive learning through gameplay, integrating mission-based progression, interactive quizzes, and performance optimization for VR platforms. It highlights my ability to work with WebVR technologies, handle real-time interaction challenges, and design engaging user experiences.
+---
+
+## 🕹 Game & Interactive Projects
+
+### Python Card Games x2
+Two implementations of popular card games (Le Pouilleux / XOXO) showcasing object-oriented programming, game logic, and GUI design.
+
+### Bohanza Card Game (C++)
+Efficient C++ implementation of the Bohanza card game, focusing on data structures, dynamic memory management, and game mechanics.
+
+---
+
+## 🌐 Web & Software Projects
+
+### e-Hotels Website
+**Stack:** PHP & SQL  
+A full-featured hotel booking web application demonstrating backend development, database management, and API integration.
+
+### KNN in Java
+Optimized k-Nearest Neighbors implementation for classification tasks, demonstrating object-oriented principles and efficient data analysis.
