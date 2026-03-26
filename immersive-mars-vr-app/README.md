@@ -20,7 +20,7 @@ The core idea behind this project is learning through direct interaction rather 
 
 ---
 
-## Features
+## Features-
 
 ### Implemented Features
 
