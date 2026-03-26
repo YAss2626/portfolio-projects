@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.PriorityQueue;
-
+//knn
 public class KNN {
 		private int k; //value of k
 		private ArrayList<LabelledPoint> pointsList;
