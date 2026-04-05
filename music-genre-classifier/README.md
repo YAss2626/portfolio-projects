@@ -1,4 +1,4 @@
-By Yacine Dosso - 
+By Yacine Dosso
 
 # Music Genre Classifier
 **Author:** Yacine Dosso  
@@ -141,6 +141,42 @@ This connects directly to research by Bello et al. (2015) on rhythm similarity, 
 Genre labels are inherently fuzzy. Rock and country share rhythmic patterns; disco and pop overlap harmonically. Classification accuracy is a useful metric but doesn't fully capture whether a model truly "understands" musical similarity.
 
 ---
+
+
+## Out-of-Distribution Test: African Music Samples
+
+The cultural limitation described above raises a testable hypothesis: if the model 
+has never encountered non-Western music during training, how does it behave when it does?
+
+11 audio samples were sourced from Pixabay (CC0 license), representing African genres 
+entirely absent from GTZAN: Afrobeat, Amapiano, Highlife, Afro-Trap, Djembe percussion, 
+and Swahili chant. The same feature extraction pipeline and trained SVM were used without 
+any retraining.
+
+| African Genre | Predicted As (GTZAN) |
+|---|---|
+| Amapiano | blues |
+| Afrobeat | reggae |
+| Highlife / Afropop | country |
+| Djembe / Percussion | blues |
+| Swahili / Chant | reggae |
+| Afro-Trap | reggae |
+| African Worldbeat | hiphop |
+| Accra / Highlife | jazz |
+| African Pop | blues |
+| Afro Fusion | hiphop |
+
+The misclassifications are not random, they reveal which acoustic proxies the model 
+relies on. Amapiano's deep bass maps to blues; Afrobeat's syncopated rhythm maps to 
+reggae; Highlife's melodic guitar maps to country. The model is not recognizing these 
+genres — it is finding the closest Western acoustic match in a feature space that was 
+never designed to represent them.
+
+This confirms that the feature set itself encodes Western musical assumptions. Building 
+systems that generalize across the full diversity of human music requires not just more 
+data, but different data — and potentially different features.
+
+Sources: [Pixabay](https://pixabay.com/music/) (CC0 license)
 
 ## References
 

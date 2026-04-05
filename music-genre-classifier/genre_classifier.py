@@ -147,10 +147,16 @@ print(f"Neural Net Accuracy: {mlp_acc:.2%}")
 
 
 
+
 # RESULT COMPARSON
 best_model = grid_svm.best_estimator_ if svm_acc >= mlp_acc else grid_mlp.best_estimator_
 best_preds = svm_preds if svm_acc >= mlp_acc else mlp_preds
 best_name = "SVM" if svm_acc >= mlp_acc else "Neural Network"
+
+import pickle
+with open("best_model.pkl", "wb") as f: pickle.dump(best_model, f)
+with open("scaler.pkl", "wb") as f: pickle.dump(scaler, f)
+
 
 print(f"\nBest model: {best_name} ({max(svm_acc, mlp_acc):.2%})")
 print("\nClassification Report:")
@@ -168,3 +174,5 @@ plt.tight_layout()
 plt.savefig('confusion_matrix.png', dpi=150)
 plt.show()
 print("\nConfusion matrix saved as confusion_matrix.png")
+
+
