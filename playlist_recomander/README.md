@@ -58,13 +58,13 @@ Each song is described by 50 numbers capturing its timbre, harmony, rhythm and s
 
 ### Key observations
 
-**Classical** performs best (similarity ~0.85, 100% correct genre) — classical music is acoustically very distinct from other genres, making it easy to separate in feature space.
+**Classical** performs best (similarity ~0.85, 100% correct genre), classical music is acoustically very distinct from other genres, making it easy to separate in feature space.
 
-**Blues → Rock**: the system consistently recommends rock for blues tracks. This is not a failure — blues and rock share chord progressions, instrumentation, and rhythmic structure. Rock literally evolved from blues. The system is revealing a real musical relationship that genre labels hide.
+**Blues → Rock**: the system consistently recommends rock for blues tracks. This is not a failure, blues and rock share chord progressions, instrumentation, and rhythmic structure. Rock literally evolved from blues. The system is revealing a real musical relationship that genre labels hide.
 
-**Hiphop → Disco**: the top recommendation for hiphop is a disco track. Both genres share strong beats, prominent basslines, and high energy — a connection that is historically and acoustically grounded.
+**Hiphop → Disco**: the top recommendation for hiphop is a disco track. Both genres share strong beats, prominent basslines, and high energy, a connection that is historically and acoustically grounded.
 
-**Jazz → Classical**: jazz recommendations include classical tracks. Both are acoustic, harmonically complex, and low in distortion — the feature vectors pick up on this structural similarity.
+**Jazz → Classical**: jazz recommendations include classical tracks. Both are acoustic, harmonically complex, and low in distortion, the feature vectors pick up on this structural similarity.
 
 **Metal → Hiphop**: metal occasionally recommends hiphop, likely due to shared high energy and aggressive rhythmic patterns.
 
@@ -108,6 +108,26 @@ playlist_recommender/
 
 ---
 
+
+## Embedding Comparison: Handcrafted Features vs. OpenL3
+
+To test whether learned embeddings capture genre nuance better than handcrafted features,the same recommender was run using 512-dimensional OpenL3 embeddings extracted from a  pre-trained deep neural network, and compared against the 50-dimensional feature baseline.
+
+| Query | Features - Correct/5 | OpenL3 - Correct/5 | Winner |
+|---|---|---|---|
+| blues.00000.wav | 1/5 | 5/5 | OpenL3  |
+| classical.00000.wav | 5/5 | 5/5 | Tie |
+| metal.00000.wav | 5/5 | 5/5 | Tie |
+| hiphop.00000.wav | 2/5 | 1/5 | Features |
+| jazz.00000.wav | 1/5 | 0/5 | Neither |
+| disco.00000.wav | 0/5 | 1/5 | OpenL3 |
+| rock.00000.wav | 2/5 | 5/5 | OpenL3  |
+
+**Key finding:** OpenL3 embeddings significantly outperform handcrafted features on acoustically ambiguous genres like blues and rock. For acoustically distinct genres like classical and metal, both approaches perform equally well, the signal is strong enough that simple features suffice.
+
+**Jazz remains hard for both**,both methods confuse jazz with classical. 
+This is not a failure of the algorithm; it reflects a genuine acoustic overlap. Jazz and classical share harmonic complexity, acoustic instrumentation, and low distortion, features that both a 50-dim vector and a 512-dim embedding pick up on equally.
+
 ## Reflections
 
 The most interesting finding here is not the accuracy;it's the mistakes. When the system recommends rock for a blues track, or disco for hiphop, it's not wrong. Blues and rock share the same chord progressions and electric guitar timbre.
@@ -117,4 +137,4 @@ A content-based system that ignores genre labels and listens to the actual audio
 
 The real limitation is not the algorithm. It's the data. Every song in this dataset comes from the same cultural tradition. There's no Coupé-Décalé, no Afrobeat, no Mbalax. A system trained only on Western music can only understand similarity within that world. That's not a technical problem; it's a question of whose music gets represented, and whose doesn't.
 
- 
+The embedding comparison makes this concrete: OpenL3, trained on large-scale audio data without any manual feature engineering, consistently outperforms handcrafted features on genres where acoustic boundaries are blurry. This raises the question that connects this  project directly to Music Information Retrieval research, if learned embeddings out perform handcrafted features for Western genres, what would a model trained on a culturally diverse audio corpus do for non-Western music?

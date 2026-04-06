@@ -168,7 +168,14 @@ for i in range(5):
     print(f"{i+1}. {files_rec[i]} | genre: {genres_rec[i]} | similarity: {results[i][1]:.4f}")
 
 
+import numpy as np
+np.save("X_scaled.npy", X_scaled)
+np.save("filenames.npy", filenames)
+np.save("labels.npy", label)
+print("Data saved!")
+
 #  VISUALISATION 1: Bar chart pour une chanson donnée 
+'''
 def plot_recommendations(filename):
     results, genres_rec, files_rec = recommend(filename)
     
@@ -208,10 +215,11 @@ def plot_genre_heatmap():
     plt.savefig('genre_similarity_heatmap.png', dpi=150)
     plt.show()
 
-# ── TEST ──
+#  TEST 
 plot_recommendations("blues.00000.wav")
 plot_recommendations("classical.00000.wav")
 plot_recommendations("metal.00000.wav")
 plot_recommendations("hiphop.00000.wav")
 plot_recommendations("jazz.00000.wav")
 plot_genre_heatmap()
+'''
