@@ -93,7 +93,7 @@ Computes standard IR metrics from TREC-format results files:
 | USE reranker | 0.3426 | 0.0560 |
 
 The submitted `Results` file contains the MPNet reranker output, as it achieved the best overall performance.
-
+  
 ---
 
 ## Discussion

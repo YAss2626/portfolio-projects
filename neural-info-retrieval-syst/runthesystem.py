@@ -13,7 +13,7 @@ def load_test_qids_from_qrels(qrels_path):
         for line in f:
             parts = line.strip().split()
             if len(parts) >= 1:
-                qids.add(int(parts[0]))
+                qids.add(int(parts[0]))   
     return qids
 
 def load_test_queries(queries_path, qrels_path):
