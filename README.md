@@ -5,21 +5,19 @@ Collection of my academic and personal projects in computer science, showcasing 
 
 ---
 
-## 🎵 Music & Creative Projects
+## 🎵 Music Information Retrieval
 
-### Music Genre Classifier
-**Stack:** Python, librosa, scikit-learn  
-A machine learning pipeline classifying music genres using audio features (MFCCs, chroma, tempo). Built two models (SVM + Neural Network) with Grid Search tuning. Questions what it means to train a model only on Western music.
+**Music Genre Classifier**  
+Stack: Python, librosa, scikit-learn  
+A machine learning pipeline classifying music genres using audio features (MFCCs, chroma, spectral contrast, tempo). Trained and compared SVM and Neural Network models with GridSearch tuning. Includes an out-of-distribution test on African music samples (Afrobeat, Amapiano, Highlife) to expose the cultural blind spots of models trained exclusively on Western data.
 
+**Content-Based Playlist Recommender**  
+Stack: Python, librosa, scikit-learn, openl3  
+A recommendation system finding acoustically similar songs using cosine similarity. Compares two approaches: handcrafted audio features (50-dim) vs. learned OpenL3 embeddings (512-dim). Results show embeddings significantly outperform handcrafted features on acoustically ambiguous genres like blues  and rock, while both struggle equally on jazz vs. classical, a distinction  that may be more cultural than acoustic.
 
-### Content-Based Playlist Recommender
-**Stack**: Python, librosa, scikit-learn  
-A recommendation system that finds acoustically similar songs using cosine similarity on audio features. Reveals cross-genre musical relationships- blues/rock, hiphop/disco -and explores the limits of Western-centric music datasets.
-
-
-### Immersive Mars VR
-**Stack:** A-Frame, JavaScript  
-An interactive VR experience allowing users to explore Mars and complete educational missions, emphasizing immersive learning and real-time interaction.
+**Neural Information Retrieval System**  
+Stack: Python, NLTK, sentence-transformers, TensorFlow Hub  
+Full IR pipeline on the SciFact scientific corpus: TF-IDF baseline + neural reranking with MPNet (MAP: 0.6327, +19.6% over baseline) and USE (MAP: 0.3426). The USE vs. MPNet gap reveals that domain matters more than architecture, a finding that maps directly onto audio retrieval and motivates the move from handcrafted MIR features to learned audio embeddings.
 
 ---
 
