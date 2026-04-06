@@ -1,0 +1,103 @@
+Results :
+COMPARISON: Handcrafted Features vs. Learned Embeddings
+
+Query: blues.00000.wav [BLUES]
+  Handcrafted Features:
+    X rock.00025.wav [rock] - sim: 0.6519
+    X rock.00063.wav [rock] - sim: 0.6449
+    X rock.00086.wav [rock] - sim: 0.6437
+    OK blues.00078.wav [blues] - sim: 0.6139
+    X rock.00071.wav [rock] - sim: 0.6073
+  OpenL3 Embeddings:
+    OK blues.00077.wav [blues] � sim: 0.6072
+    OK blues.00054.wav [blues] � sim: 0.5727
+    OK blues.00053.wav [blues] � sim: 0.5544
+    OK blues.00001.wav [blues] � sim: 0.5367
+    OK blues.00078.wav [blues] � sim: 0.5273
+
+Query: classical.00000.wav [CLASSICAL]
+  Handcrafted Features:
+    OK classical.00001.wav [classical] - sim: 0.8546
+    OK classical.00002.wav [classical] - sim: 0.8379
+    OK classical.00097.wav [classical] - sim: 0.7713
+    OK classical.00090.wav [classical] - sim: 0.7619
+    OK classical.00003.wav [classical] - sim: 0.7489
+  OpenL3 Embeddings:
+    OK classical.00002.wav [classical] � sim: 0.9349
+    OK classical.00010.wav [classical] � sim: 0.9014
+    OK classical.00008.wav [classical] � sim: 0.8984
+    OK classical.00004.wav [classical] � sim: 0.8976
+    OK classical.00097.wav [classical] � sim: 0.8702
+
+Query: metal.00000.wav [METAL]
+  Handcrafted Features:
+    OK metal.00020.wav [metal] - sim: 0.8378
+    OK metal.00053.wav [metal] - sim: 0.8275
+    OK metal.00045.wav [metal] - sim: 0.8097
+    OK metal.00016.wav [metal] - sim: 0.8093
+    OK metal.00049.wav [metal] - sim: 0.8088
+  OpenL3 Embeddings:
+    OK metal.00006.wav [metal] � sim: 0.8761
+    OK metal.00001.wav [metal] � sim: 0.8729
+    OK metal.00004.wav [metal] � sim: 0.8482
+    OK metal.00007.wav [metal] � sim: 0.8286
+    OK metal.00008.wav [metal] � sim: 0.7844
+
+Query: hiphop.00000.wav [HIPHOP]
+  Handcrafted Features:
+    X disco.00066.wav [disco] - sim: 0.8296
+    OK hiphop.00011.wav [hiphop] - sim: 0.7731
+    X metal.00033.wav [metal] - sim: 0.7725
+    X metal.00093.wav [metal] - sim: 0.7725
+    OK hiphop.00088.wav [hiphop] - sim: 0.7702
+  OpenL3 Embeddings:
+    X disco.00085.wav [disco] � sim: 0.6846
+    X disco.00084.wav [disco] � sim: 0.6002
+    X disco.00061.wav [disco] � sim: 0.5911
+    OK hiphop.00084.wav [hiphop] � sim: 0.5892
+    OK hiphop.00015.wav [hiphop] � sim: 0.5799
+
+Query: jazz.00000.wav [JAZZ]
+  Handcrafted Features:
+    OK jazz.00001.wav [jazz] - sim: 0.8000
+    X classical.00085.wav [classical] - sim: 0.7187
+    X classical.00086.wav [classical] - sim: 0.7165
+    X classical.00051.wav [classical] - sim: 0.7027
+    X classical.00062.wav [classical] - sim: 0.6910
+  OpenL3 Embeddings:
+    X classical.00060.wav [classical] � sim: 0.8612
+    X classical.00086.wav [classical] � sim: 0.8584
+    X classical.00085.wav [classical] � sim: 0.8524
+    X classical.00088.wav [classical] � sim: 0.8349
+    X classical.00059.wav [classical] � sim: 0.8346
+
+Query: disco.00000.wav [DISCO]
+  Handcrafted Features:
+    X reggae.00051.wav [reggae] - sim: 0.6549
+    X reggae.00085.wav [reggae] - sim: 0.6327
+    X hiphop.00073.wav [hiphop] - sim: 0.6297
+    X rock.00048.wav [rock] - sim: 0.6151
+    X pop.00026.wav [pop] - sim: 0.6107
+  OpenL3 Embeddings:
+    OK disco.00027.wav [disco] � sim: 0.5761
+    X reggae.00076.wav [reggae] � sim: 0.5483
+    X hiphop.00052.wav [hiphop] � sim: 0.5317
+    X hiphop.00053.wav [hiphop] � sim: 0.5277
+    X hiphop.00066.wav [hiphop] � sim: 0.5254
+
+Query: rock.00000.wav [ROCK]
+  Handcrafted Features:
+    OK rock.00003.wav [rock] - sim: 0.5951
+    X blues.00002.wav [blues] - sim: 0.5928
+    X country.00083.wav [country] - sim: 0.5760
+    OK rock.00088.wav [rock] - sim: 0.5730
+    X country.00070.wav [country] - sim: 0.5660
+  OpenL3 Embeddings:
+    OK rock.00001.wav [rock] � sim: 0.7723
+    OK rock.00096.wav [rock] � sim: 0.6396
+    OK rock.00005.wav [rock] � sim: 0.6220
+    OK rock.00004.wav [rock] � sim: 0.6057
+    OK rock.00008.wav [rock] � sim: 0.5856
+
+Generating comparison visualizations...
+
